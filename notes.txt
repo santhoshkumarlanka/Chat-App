@@ -1,1 +1,77 @@
-mongodb ps: PZC7IhFq2Qnf3Fk1
+mongodb ps: chatapppass
+
+
+
+
+express
+mongoose 
+dotenv
+jsonwebtoken
+bcryptjs
+cookie-parser
+cloudinary
+socket.
+
+
+
+
+
+
+mongo atlas
+username = santhosh
+password = lankasanthosh_006 
+
+
+mongodb_db_ps:uwJTB3mcYtB2rWrd
+
+
+
+-- on changing the type to module in package.json, you are telling Node.js to use the ECMAScript (ES) module system instead of the older CommonJS module system.
+This allows you to use modern JavaScript syntax like:
+
+import express from "express";
+export default router;
+
+
+
+
+
+
+What is Cloudinary?
+
+Cloudinary is a cloud-based media storage and management service.
+Instead of storing images on your own server, you upload them to Cloudinary, and it stores them for you.
+Think of it as Google Drive, but specifically designed for images and videos in web applications.
+
+
+
+
+Can MongoDB store images?
+
+Yes. MongoDB can store images.
+There are two common ways:
+    1.Store the image as Binary (Buffer/BinData) inside a document.
+    2.Store large files using GridFS, which splits files into chunks.
+So the reason we don't usually store images in MongoDB is not because it's impossible. It's because it's not the best tool for the job.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//  notes to be made: 
+mogodb methods
+jwt methods
+storage types on web

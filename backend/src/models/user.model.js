@@ -33,3 +33,6 @@ const userSchema = new mongoose.Schema(
 const User = mongoose.model("User", userSchema);
 
 export default User;
+
+
+// models are used to define the structure of the data that will be stored in the database, and also to create instances of that data. They are also used to define the methods that can be used to interact with the data.

@@ -1,0 +1,24 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// to do notes
+react-router-dom
+react-hot-toast
+import {Routes,Route} from 'react-router-dom'
+
+axios
+why axios over fetch
+zustand
+
