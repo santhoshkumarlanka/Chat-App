@@ -26,12 +26,18 @@ app.use(
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messegeRoutes);
 
-app.get("/", (req, res) => {
-  res.send('src/index.js  ');
-});
+// app.get("/", (req, res) => {
+//   res.send('src/index.js  ');
+// });
+
 
 if(process.env.NODE_ENV==="production"){
+
   app.use(express.static(path.join(__dirname,"../frontend/dist")));
+
+  app.get("*",(req,res)=>{
+    res.sendFile(path.join(__dirname,"../frontend","dist","index.html"));
+  });
 }
 
 // express.static is a built-in middleware function in Express. It tells the server to automatically serve any static files (images, CSS files, JavaScript bundles) requested by the client from a specific folder without you having to write individual routes for each file.
