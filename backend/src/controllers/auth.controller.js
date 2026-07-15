@@ -2,6 +2,7 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../lib/utils.js";
+import cloudinary from "../lib/cloudinary.js";
 
 
 
@@ -116,12 +117,18 @@ export const updateProfile = async (req, res) => {
         return res.status(400).json({ message: "Profile picture is required" });
       }
 
-      const upoladResponse = await cloudinary.uploader.upload(profilePic);
+      const uploadResponse = await cloudinary.uploader.upload(profilePic);
+      const updateFields = { profilePicture: uploadResponse.secure_url };
+      if (fullName) updateFields.fullName = fullName;
+      if (email) updateFields.email = email;
+
       const updatedUser = await User.findByIdAndUpdate(
         userId,
-        { fullName, email, profilePicture: upoladResponse.secure_url },
+        updateFields,
         { new: true }
       ).select("-password");
+
+      return res.status(200).json(updatedUser);
   }
   catch (error) {
     console.error("Error in updateProfile:", error);
@@ -131,7 +138,7 @@ export const updateProfile = async (req, res) => {
 
 export const checkAuth = (req, res) => {
   try {
-    return res.status(200).json({ message: "Authenticated", user: req.user });
+    return res.status(200).json(req.user);
   } catch (error) {
     console.error("Error in checkAuth:", error);
     return res.status(500).json({ message: "Server error" });

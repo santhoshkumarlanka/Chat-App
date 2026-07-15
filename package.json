@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "axios": "^1.18.1",
+    "zustand": "^5.0.14"
+  },
+  "name": "chat-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/santhoshkumarlanka/Chat-App.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/santhoshkumarlanka/Chat-App/issues"
+  },
+  "homepage": "https://github.com/santhoshkumarlanka/Chat-App#readme",
+  "description": ""
+}
