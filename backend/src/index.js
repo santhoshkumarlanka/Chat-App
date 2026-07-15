@@ -8,8 +8,11 @@ import authRoutes from './routes/auth.route.js';
 import messegeRoutes from './routes/message.route.js';
 import { app, server } from "./lib/socket.js";
 
+import path from "path";
+
 dotenv.config();  
 const port = process.env.PORT || 5001;
+const __dirname = path.resolve();
 
 app.use(cookieParser());
 app.use(express.json());
@@ -26,6 +29,13 @@ app.use("/api/messages", messegeRoutes);
 app.get("/", (req, res) => {
   res.send('src/index.js  ');
 });
+
+if(process.env.NODE_ENV==="production"){
+  app.use(express.static(path.join(__dirname,"../frontend/dist")));
+}
+
+// express.static is a built-in middleware function in Express. It tells the server to automatically serve any static files (images, CSS files, JavaScript bundles) requested by the client from a specific folder without you having to write individual routes for each file.
+
 
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
