@@ -1,6 +1,7 @@
 import { Server } from "socket.io";
 import http from "http";
 import express from "express";
+import Group from "../models/group.model.js";
 
 const app = express();
 const server = http.createServer(app);
@@ -24,6 +25,16 @@ io.on("connection", (socket) => {
   const userId = socket.handshake.query.userId;
   if (userId && userId !== "undefined") {
     userSocketMap[userId] = socket.id;
+
+    // Join all group rooms this user belongs to
+    Group.find({ members: userId }).then((groups) => {
+      groups.forEach((group) => {
+        socket.join(group._id.toString());
+        console.log(`User ${userId} joined room ${group._id}`);
+      });
+    }).catch((err) => {
+      console.error("Error joining group rooms on socket connect: ", err.message);
+    });
   }
 
   // io.emit() is used to send events to all the connected clients
