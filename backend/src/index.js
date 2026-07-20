@@ -27,7 +27,8 @@ app.use(
   })
 );
 
-
+console.log("CLIENT_URL =", process.env.CLIENT_URL);
+console.log("NODE_ENV =", process.env.NODE_ENV);
 
 app.get("/", (req, res) => {
   res.json({
