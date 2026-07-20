@@ -28,11 +28,9 @@ const messageSchema = new mongoose.Schema(
 );
 
 // Ensure that either receiverId or groupId is specified
-messageSchema.pre("validate", function (next) {
+messageSchema.pre("validate", function () {
     if (!this.receiverId && !this.groupId) {
-        next(new Error("A message must specify either a receiverId or a groupId."));
-    } else {
-        next();
+        throw new Error("A message must specify either a receiverId or a groupId.");
     }
 });
 

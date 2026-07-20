@@ -7,6 +7,7 @@ import cors from "cors";
 import authRoutes from './routes/auth.route.js';
 import messegeRoutes from './routes/message.route.js';
 import groupRoutes from './routes/group.route.js';
+import { globalLimiter } from "./middleware/rateLimiter.middleware.js";
 import { app, server } from "./lib/socket.js";
 
 import path from "path";
@@ -23,6 +24,8 @@ app.use(
     credentials: true,
   })
 );
+
+app.use("/api", globalLimiter);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messegeRoutes);
