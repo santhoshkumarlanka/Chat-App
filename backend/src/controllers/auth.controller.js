@@ -97,7 +97,13 @@ export const login = async (req, res) => {
 export const logout = (req, res) => {
   // To log out a user, we can simply clear the JWT token from the client's cookies by setting it to an empty string and setting its expiration time to 0. This effectively removes the token from the client's browser, preventing it from being used for authentication in future requests.
   try{
-    res.cookie("jwt", "", {maxAge: 0});
+    res.cookie("jwt", "", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      path:"/",
+      expires: new Date(0),
+    });
 
     return res.status(200).json({ message: "Logged out successfully" });
   }

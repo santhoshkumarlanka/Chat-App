@@ -1,32 +1,44 @@
 import express from 'express';
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import { connectDB } from './lib/db.js';
 import cors from "cors";
 
 import authRoutes from './routes/auth.route.js';
 import messegeRoutes from './routes/message.route.js';
 import groupRoutes from './routes/group.route.js';
+
 import { globalLimiter } from "./middleware/rateLimiter.middleware.js";
+import { connectDB } from './lib/db.js';
 import { app, server } from "./lib/socket.js";
 
-import path from "path";
+// import path from "path";
+// const __dirname = path.resolve();
+
 
 dotenv.config();  
 const port = process.env.PORT || 5001;
-const __dirname = path.resolve();
 
 app.use(cookieParser());
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL,
     credentials: true,
   })
 );
 
-app.use("/api", globalLimiter);
 
+
+app.get("/", (req, res) => {
+  res.json({
+    status: "OK",
+    message: "Chat API is running",
+  });
+});
+
+
+
+app.use("/api", globalLimiter);
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messegeRoutes);
 app.use("/api/groups", groupRoutes);

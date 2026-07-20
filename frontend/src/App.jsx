@@ -18,7 +18,7 @@ import { Toaster } from "react-hot-toast";
 import { useThemeStore } from "./store/useThemeStore.js";
 
 const App = () => {
-
+  console.log(import.meta.env.VITE_API_URL);
   const {authUser,checkAuth,isCheckingAuth} = useAuthStore();
   const { theme } = useThemeStore();
   

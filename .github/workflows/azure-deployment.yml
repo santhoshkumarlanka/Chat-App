@@ -1,0 +1,49 @@
+name: Deploy Backend to Azure
+
+on:
+  push:
+    branches:
+      - azure-deployment
+
+    paths:
+      - "backend/**"
+      - ".github/workflows/azure-deploy.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create deployment package
+        run: |
+          zip -r release.zip . \
+          -x "node_modules/*" \
+          -x ".git/*" \
+          -x ".github/*"
+
+      - name: Deploy to Azure App Service
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: santhosh-chat-app
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: backend/release.zip

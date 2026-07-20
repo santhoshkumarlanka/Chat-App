@@ -16,8 +16,10 @@ export const generateToken = (userId,res) => {
         // prevent xss attacks, cross-site scripting attack prevention. This prevents JavaScript running in the browser from reading the cookie.
         // Note: without it console.log(document.cookie); might output your document.cokkie. If an attacker injects malicious JavaScript(an XSS attack), they would steal your JWT. with httpOnly:true the browser blocks javascript from accessing the cookie only the browser automatically sends it to your server.
 
-        secure: process.env.NODE_ENV !== 'development',
-        sameSite: 'strict', // CSRF attacks cross-site request forgery attack prevention
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+        // CSRF attacks cross-site request forgery attack prevention
+        path:"/",
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
     return token;
